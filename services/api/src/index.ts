@@ -26,6 +26,19 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+let ACCESS_TOKEN: string;
+let ITEM_ID: string;
+
+const getAccessToken: () => string = () => {
+    if (ACCESS_TOKEN) {
+        return ACCESS_TOKEN;
+    }
+    
+    if (PLAID_ENV === 'sandbox') {
+        return 'access-sandbox-56412edb-cfa3-4963-a2cf-cc6cda1cdda1';
+    }
+}
+
 app.get('/', (req: Request, res: Response) => {
     res.send({
         message: 'hello world!!',
@@ -43,8 +56,8 @@ app.post('/get_access_token', (req: Request, res: Response, next: NextFunction) 
             });
         }
 
-        const ACCESS_TOKEN = tokenResponse.access_token;
-        const ITEM_ID = tokenResponse.item_id;
+        ACCESS_TOKEN = tokenResponse.access_token;
+        ITEM_ID = tokenResponse.item_id;
         console.log(tokenResponse);
 
         res.json({
@@ -54,6 +67,18 @@ app.post('/get_access_token', (req: Request, res: Response, next: NextFunction) 
         });
     });
 });
+
+app.get('/get_transactions', async (req: Request, res: Response) => {
+    let getAllTransactionsResponse: plaid.TransactionsAllResponse;
+    try {
+        getAllTransactionsResponse = await client.getAllTransactions(getAccessToken() || 'access-sandbox-56412edb-cfa3-4963-a2cf-cc6cda1cdda1', '2018-01-01', '2018-02-01')
+    } catch (e) {
+        console.log('Error getting all transactions', e);
+    }
+
+    console.log(getAllTransactionsResponse);
+    res.json(getAllTransactionsResponse);
+})
 
 app.listen(PORT, () => {
     console.log(`server started at http://localhost: ${PORT}`);

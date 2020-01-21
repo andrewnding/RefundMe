@@ -9,8 +9,8 @@ class App extends React.Component {
         metadata: Parameters<PlaidLinkProps['onSuccess']>[1]):
         ReturnType<PlaidLinkProps['onSuccess']>
     {
-        axios.post('/api/public_token_exchange', {
-            token,
+        axios.post('/api/get_access_token', {
+            public_token: token,
         }).then((response: AxiosResponse) => {
             console.log(response);
         });
