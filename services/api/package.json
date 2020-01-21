@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "start": "webpack && node ./dist/bundle.js",
+    "sandbox": "webpack && PLAID_CLIENT_ID=5e24e0b05d37d300118757ab PLAID_PUBLIC_KEY=04bdd52d45ea4c918bfd11712fbcc1 PLAID_SECRET=021e543968271c632cc696a9b322ed node ./dist/bundle.js",
     "watch": "nodemon"
   },
   "author": "",
