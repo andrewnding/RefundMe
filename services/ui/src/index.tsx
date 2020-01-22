@@ -1,9 +1,16 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import defaultReducer from './reducers/index'
 
-import { Hello } from "./components/Hello";
+import App from "./components/App";
+
+const defaultStore = createStore(defaultReducer)
 
 ReactDOM.render(
-    <Hello compiler="TypeScript" framework="React" />,
+    <Provider store={defaultStore}>
+        <App />
+    </Provider>,
     document.getElementById("root")
 );
