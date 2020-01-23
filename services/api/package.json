@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "start": "webpack && node ./dist/bundle.js",
-    "sandbox": "webpack && PLAID_CLIENT_ID=5e24e0b05d37d300118757ab PLAID_PUBLIC_KEY=04bdd52d45ea4c918bfd11712fbcc1 PLAID_SECRET=021e543968271c632cc696a9b322ed node ./dist/bundle.js",
+    "sandbox": "webpack && PLAID_CLIENT_ID=5e24e0b05d37d300118757ab PLAID_PUBLIC_KEY=04bdd52d45ea4c918bfd11712fbcc1 PLAID_SECRET=021e543968271c632cc696a9b322ed PG_CONNECTION_STRING=postgres://raifyuma:4Npu8xvGRcRXzXjSlA2nZuBzi2uTuhxl@rajje.db.elephantsql.com:5432/raifyuma node ./dist/bundle.js",
     "watch": "nodemon"
   },
   "author": "",
@@ -17,10 +17,12 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "moment": "^2.24.0",
+    "pg": "^7.17.1",
     "plaid": "^4.3.0"
   },
   "devDependencies": {
     "@types/node": "^13.1.8",
+    "@types/pg": "^7.14.1",
     "nodemon": "^2.0.2",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.5",

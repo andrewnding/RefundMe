@@ -1,0 +1,16 @@
+PG_CONNECTION_STRING=postgres://raifyuma:4Npu8xvGRcRXzXjSlA2nZuBzi2uTuhxl@rajje.db.elephantsql.com:5432/raifyuma;
+
+connect() {
+    echo "Connecting to postgres database";
+    psql -d $PG_CONNECTION_STRING;
+}
+
+migrate() {
+    for file in ./src/db/migrations/*
+    do
+        echo $file;
+        psql -d $PG_CONNECTION_STRING -f $file;
+    done
+}
+
+"$@"
