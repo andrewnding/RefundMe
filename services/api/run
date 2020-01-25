@@ -1,3 +1,6 @@
+#!/bin/bash
+set -euo pipefail
+
 PG_CONNECTION_STRING=postgres://raifyuma:4Npu8xvGRcRXzXjSlA2nZuBzi2uTuhxl@rajje.db.elephantsql.com:5432/raifyuma;
 
 connect() {
@@ -6,10 +9,37 @@ connect() {
 }
 
 migrate() {
+    HAS_MIGRATIONS="$(psql -d $PG_CONNECTION_STRING -tAc "SELECT COUNT(*) FROM information_schema.tables where table_name = 'migrations'")";
+    if [[ $HAS_MIGRATIONS -ne "1" ]]; then
+        echo "No migrations table found. Creating migrations table";
+        psql -d $PG_CONNECTION_STRING -c "CREATE TABLE migrations (id INT PRIMARY KEY, filename VARCHAR, date_applied TIMESTAMP NOT NULL DEFAULT NOW())";
+    else
+        echo "Migrations table found";
+    fi
+
+    MAX_MIGRATION_ID="$(psql -d $PG_CONNECTION_STRING -tAc "SELECT MAX(id) from migrations")";
+    NUMBER_REGEX='^[0-9]+$';
+    if [[ $MAX_MIGRATION_ID =~ $NUMBER_REGEX ]]; then
+        echo "Migrations table has $MAX_MIGRATION_ID rows";
+    else
+        echo "Migrations table has no rows";
+        MAX_MIGRATION_ID="";
+    fi
+
+    COUNTER=0;
     for file in ./src/db/migrations/*
     do
-        echo $file;
+        let COUNTER+=1;
+        echo "Counter is $COUNTER and max migration id is $MAX_MIGRATION_ID";
+        if [[ ! -z $MAX_MIGRATION_ID ]] && [[ $COUNTER -le $MAX_MIGRATION_ID ]]; then
+            echo "skipping row $COUNTER";
+            continue
+        fi
+
+        FILENAME="$(echo $file | sed "s/.*\///")";
+        echo $FILENAME;
         psql -d $PG_CONNECTION_STRING -f $file;
+        psql -d $PG_CONNECTION_STRING -c "INSERT INTO migrations (id, filename) VALUES ($COUNTER, '$FILENAME')"
     done
 }
 
