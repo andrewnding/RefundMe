@@ -1,6 +1,8 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import * as plaid from 'plaid';
+import { getPerson, getItemsFromPerson, createItem } from '../db/postgres';
+import { PersonType, ItemType } from '../types/database-types';
 
 const {
     PLAID_CLIENT_ID,
@@ -65,6 +67,64 @@ router.get('/get_transactions', async (req: Request, res: Response) => {
 
     console.log(getAllTransactionsResponse);
     res.json(getAllTransactionsResponse);
+})
+
+router.get('/person/:person_id', async (req: Request, res: Response) => {
+    let person: PersonType;
+    try {
+        person = await getPerson('2cda26f6-4091-11ea-8d0b-122d51db1d75');
+    } catch (e) {
+        console.log('Error getting person', e);
+    }
+    res.json(person);
+})
+
+router.get('/person/items/:person_id', async (req: Request, res: Response) => {
+    let items: ItemType[];
+    try {
+        items = await getItemsFromPerson('2cda26f6-4091-11ea-8d0b-122d51db1d75');
+    } catch (e) {
+        console.log('Error getting person', e);
+    }
+    res.json(items);
+})
+
+router.post('/create_link', async (req: Request, res: Response) => {
+    const {
+        public_token,
+        person_id,
+    } = req.body;
+
+    let tokenResponse: plaid.TokenResponse;
+    try {
+        tokenResponse = await client.exchangePublicToken(public_token)
+    } catch (e) {
+        const msg = 'Could not exchange public token!';
+        console.log(`${msg} \n ${JSON.stringify(e)}`);
+        return res.json({
+            error: msg,
+        });
+    }
+
+    const {
+        item_id,
+        access_token,
+    } = tokenResponse;
+
+    try {
+        await createItem(person_id, item_id, access_token);
+    } catch (e) {
+        console.log(`Error creating item link`);
+        return res.json({
+            error: e,
+        });
+    }
+
+    res.json({
+        item_id: item_id,
+        access_token: access_token,
+        error: false,
+    });
 })
 
 export default router;

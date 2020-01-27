@@ -18,5 +18,7 @@ CREATE TABLE IF NOT EXISTS item (
 CREATE TABLE IF NOT EXISTS person_item (
     person_id UUID NOT NULL,
     item_id VARCHAR NOT NULL,
+    FOREIGN KEY (person_id) REFERENCES person (id),
+    FOREIGN KEY (item_id) REFERENCES item (item_id),
     PRIMARY KEY (person_id, item_id)
 );

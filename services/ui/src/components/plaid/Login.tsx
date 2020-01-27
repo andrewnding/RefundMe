@@ -9,7 +9,7 @@ class Login extends React.Component {
         metadata: Parameters<PlaidLinkProps['onSuccess']>[1]):
         ReturnType<PlaidLinkProps['onSuccess']>
     {
-        axios.post('/api/get_access_token', {
+        axios.post('/api/plaid/get_access_token', {
             public_token: token,
         }).then((response: AxiosResponse) => {
             console.log(response);
