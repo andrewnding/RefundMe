@@ -69,27 +69,17 @@ router.get('/get_transactions', async (req: Request, res: Response) => {
     res.json(getAllTransactionsResponse);
 })
 
-router.get('/person/:person_id', async (req: Request, res: Response) => {
-    let person: PersonType;
-    try {
-        person = await getPerson('2cda26f6-4091-11ea-8d0b-122d51db1d75');
-    } catch (e) {
-        console.log('Error getting person', e);
-    }
-    res.json(person);
-})
-
 router.get('/person/items/:person_id', async (req: Request, res: Response) => {
     let items: ItemType[];
     try {
-        items = await getItemsFromPerson('2cda26f6-4091-11ea-8d0b-122d51db1d75');
+        items = await getItemsFromPerson(req.params.person_id);
     } catch (e) {
         console.log('Error getting person', e);
     }
     res.json(items);
 })
 
-router.post('/create_link', async (req: Request, res: Response) => {
+router.post('/create_item', async (req: Request, res: Response) => {
     const {
         public_token,
         person_id,

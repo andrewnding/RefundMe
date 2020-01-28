@@ -11,10 +11,31 @@ const pool = new Pool({
 
 export const getPerson: (person_id: string) => Promise<PersonType> = async (person_id: string) => {
     try {
-        const res = await pool.query(`SELECT * FROM person where id = $1`, [person_id]);
+        console.log('person_id', person_id)
+        const res = await pool.query('SELECT * FROM person where id = $1', [person_id]);
+        console.log(res.rows)
         return res.rows[0]
-    } catch (err) {
-        console.log(err)
+    } catch (e) {
+        console.log(e)
+        throw e
+    }
+}
+
+export const createPerson: (person: PersonType) => Promise<PersonType> = async (person: PersonType) => {
+    const {
+        id,
+        email,
+        password,
+        first_name,
+        last_name,
+    } = person;
+
+    try {
+        const res = await pool.query('INSERT INTO person (id, email, password, first_name, last_name) VALUES ($1, $2, $3, $4, $5)', [id, email, password, first_name, last_name])
+        return res.rows[0]
+    } catch (e) {
+        console.log(e)
+        throw e
     }
 }
 
