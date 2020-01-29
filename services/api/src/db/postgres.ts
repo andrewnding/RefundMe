@@ -5,7 +5,7 @@ const {
     PG_CONNECTION_STRING,
 } = process.env;
 
-const pool = new Pool({
+export const pool = new Pool({
     connectionString: PG_CONNECTION_STRING,
 })
 

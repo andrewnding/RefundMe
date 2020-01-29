@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
-import * as bodyParser from 'body-parser';
+import configureApp from './config/config';
 import PlaidRouter from './routes/plaid-router';
 import DefaultRouter from './routes/default-router';
 
@@ -8,15 +8,13 @@ const {
     PORT = 8000,
 } = process.env;
 
-const app = express();
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-app.use(bodyParser.json());
+const app = configureApp(express());
+
 app.use('/plaid', PlaidRouter);
 app.use('/', DefaultRouter);
 
 app.get('/', (req: Request, res: Response) => {
+    console.log('sessionId', req.sessionID)
     res.send({
         message: 'Hello, world!',
     });
