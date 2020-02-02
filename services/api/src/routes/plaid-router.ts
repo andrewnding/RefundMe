@@ -1,8 +1,7 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import * as plaid from 'plaid';
-import { getPerson, getItemsFromPerson, createItem } from '../db/postgres';
-import { PersonType, ItemType } from '../types/database-types';
+import { PersonType, ItemType } from '../types/types';
 
 const {
     PLAID_CLIENT_ID,
@@ -72,7 +71,6 @@ router.get('/get_transactions', async (req: Request, res: Response) => {
 router.get('/person/items/:person_id', async (req: Request, res: Response) => {
     let items: ItemType[];
     try {
-        items = await getItemsFromPerson(req.params.person_id);
     } catch (e) {
         console.log('Error getting person', e);
     }
@@ -102,7 +100,7 @@ router.post('/create_item', async (req: Request, res: Response) => {
     } = tokenResponse;
 
     try {
-        await createItem(person_id, item_id, access_token);
+        // await createItem(person_id, item_id, access_token);
     } catch (e) {
         console.log(`Error creating item link`);
         return res.json({

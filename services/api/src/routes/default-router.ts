@@ -1,16 +1,16 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import * as uuidv4 from 'uuid/v4';
-import { getPerson, createPerson } from '../db/postgres';
-import { PersonType } from '../types/database-types';
-import moment = require('moment');
+import Person from '../models/person';
+import { PersonType } from '../types/types';
+import * as moment from 'moment';
 
 const router: express.Router = express.Router();
 
 router.get('/person/:person_id', async (req: Request, res: Response) => {
-    let person: PersonType;
+    let person: Person;
     try {
-        person = await getPerson(req.params.person_id);
+        person = await Person.getById(req.params.person_id);
         console.log(person)
         res.json(person);
     } catch (e) {
@@ -20,17 +20,17 @@ router.get('/person/:person_id', async (req: Request, res: Response) => {
 })
 
 router.post('/create_person', async (req: Request, res: Response) => {
-    const person: PersonType = {
+    const person = new Person({
         id: uuidv4(),
         email: req.body.email,
         password: req.body.password,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        created_at: moment(),
-    }
+        firstName: req.body.first_name,
+        lastName: req.body.last_name,
+        createdAt: moment(),
+    })
 
     try {
-        await createPerson(person)
+        await person.create()
         res.json(person)
     } catch (e) {
         console.log(`Error creating person: ${e}`)
