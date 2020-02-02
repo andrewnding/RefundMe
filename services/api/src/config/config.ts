@@ -7,7 +7,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import * as uuidv4 from 'uuid/v4';
 import PostgresStore from '../db/postgres';
 
-const dbStore = new PostgresStore();
+const pgStore = new PostgresStore();
 
 const configureApp: (app: Express) => Express = (app: Express) => {
     app.use(bodyParser.urlencoded({
@@ -15,10 +15,10 @@ const configureApp: (app: Express) => Express = (app: Express) => {
     }));
     app.use(bodyParser.json());
     const pgSession = connectPgSimple(session)
-    app.use(dbStoreConfig)
+    app.use(configureDataStore)
     app.use(session({
         store: new pgSession({
-            pool: dbStore.pool,
+            pool: pgStore.pool,
         }),
         genid: () => {
             return uuidv4()
@@ -32,9 +32,9 @@ const configureApp: (app: Express) => Express = (app: Express) => {
     return app
 }
 
-const dbStoreConfig = (req: Request, res: Response, next: NextFunction) => {
+const configureDataStore = (req: Request, res: Response, next: NextFunction) => {
     req.context = {}
-    req.context.dbStore = dbStore.pool
+    req.context.dataStore = pgStore
     next();
 }
 

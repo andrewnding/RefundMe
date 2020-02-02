@@ -1,17 +1,17 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import * as uuidv4 from 'uuid/v4';
-import Person from '../models/person';
 import { PersonType } from '../types/types';
 import * as moment from 'moment';
 
 const router: express.Router = express.Router();
 
 router.get('/person/:person_id', async (req: Request, res: Response) => {
-    let person: Person;
+    let person: PersonType;
+    const { person_id } = req.params;
+
     try {
-        person = await Person.getById(req.params.person_id);
-        console.log(person)
+        person = await req.context.dataStore.getPersonById(person_id)
         res.json(person);
     } catch (e) {
         console.log('Error getting person', e);
@@ -19,18 +19,18 @@ router.get('/person/:person_id', async (req: Request, res: Response) => {
     }
 })
 
-router.post('/create_person', async (req: Request, res: Response) => {
-    const person = new Person({
+router.post('/person/create', async (req: Request, res: Response) => {
+    const person: PersonType = {
         id: uuidv4(),
         email: req.body.email,
         password: req.body.password,
         firstName: req.body.first_name,
         lastName: req.body.last_name,
         createdAt: moment(),
-    })
+    }
 
     try {
-        await person.create()
+        await req.context.dataStore.createPerson(person)
         res.json(person)
     } catch (e) {
         console.log(`Error creating person: ${e}`)

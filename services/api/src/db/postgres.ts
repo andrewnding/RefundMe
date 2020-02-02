@@ -1,11 +1,11 @@
 import { Pool } from 'pg';
-import { PersonType, ItemType } from '../types/types';
+import { PersonType, ItemType, DataStoreType } from '../types/types';
 
 const {
     PG_CONNECTION_STRING,
 } = process.env;
 
-class PostgresStore {
+class PostgresStore implements DataStoreType {
     pool: Pool
 
     constructor() {
@@ -14,9 +14,19 @@ class PostgresStore {
         })
     }
 
-    getPerson: (person_id: string) => Promise<PersonType> = async (person_id: string) => {
+    getPersonById: (person_id: string) => Promise<PersonType> = async (person_id: string) => {
         try {
             const res = await this.pool.query('SELECT * FROM person where id = $1', [person_id]);
+            return res.rows[0]
+        } catch (e) {
+            console.log(e)
+            throw e
+        }
+    }
+
+    getPersonByEmail: (email: string) => Promise<PersonType> = async (email: string) => {
+        try {
+            const res = await this.pool.query('SELECT * FROM person where email = $1', [email]);
             return res.rows[0]
         } catch (e) {
             console.log(e)
