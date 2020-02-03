@@ -6,6 +6,7 @@ import * as passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import * as uuidv4 from 'uuid/v4';
 import PostgresStore from '../db/postgres';
+import { PersonType } from '../types/types'
 
 const pgStore = new PostgresStore();
 
@@ -42,10 +43,39 @@ const configurePassport: (app: Express) => Express = (app: Express) => {
     app.use(passport.initialize())
     app.use(passport.session())
     passport.use(new LocalStrategy(
-        (email, password, done) => {
-            
+        { usernameField: 'email' },
+        async (email, password, done) => {
+            try {
+                const person = await pgStore.getPersonByEmail(email)
+                if (person == null) {
+                    console.log('User not found')
+                    return done(null, false, { message: 'User not found.' });
+                }
+
+                if (person.password != password) {
+                    console.log('Incorrect password')
+                    return done(null, false, { message: 'Incorrect password.' });
+                }
+
+                return done(null, person)
+            } catch (e) {
+                return done(e)
+            }
         }
     ))
+
+    passport.serializeUser<PersonType, string>((user, done) => {
+        done(null, user.id);
+    });
+    
+    passport.deserializeUser<PersonType, string>(async (id, done) => {
+        try {
+            const person = await pgStore.getPersonById(id)
+            done(null, person)
+        } catch (e) {
+            done(e)
+        }
+    });
 
     return app
 }

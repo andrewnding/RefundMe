@@ -3,8 +3,13 @@ import { Request, Response } from 'express';
 import * as uuidv4 from 'uuid/v4';
 import { PersonType } from '../types/types';
 import * as moment from 'moment';
+import * as passport from 'passport'
 
 const router: express.Router = express.Router();
+
+router.post('/login', passport.authenticate('local'), (req: Request, res: Response) => {
+    res.json('nice login bro')
+})
 
 router.get('/person/:person_id', async (req: Request, res: Response) => {
     let person: PersonType;

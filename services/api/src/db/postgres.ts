@@ -17,6 +17,10 @@ class PostgresStore implements DataStoreType {
     getPersonById: (person_id: string) => Promise<PersonType> = async (person_id: string) => {
         try {
             const res = await this.pool.query('SELECT * FROM person where id = $1', [person_id]);
+            if (res.rows.length == 0) {
+                return null
+            }
+            
             return res.rows[0]
         } catch (e) {
             console.log(e)
@@ -27,6 +31,10 @@ class PostgresStore implements DataStoreType {
     getPersonByEmail: (email: string) => Promise<PersonType> = async (email: string) => {
         try {
             const res = await this.pool.query('SELECT * FROM person where email = $1', [email]);
+            if (res.rows.length == 0) {
+                return null
+            }
+            
             return res.rows[0]
         } catch (e) {
             console.log(e)
