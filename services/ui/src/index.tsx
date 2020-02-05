@@ -5,6 +5,7 @@ import { createStore } from 'redux'
 import defaultReducer from './reducers/index'
 
 import App from "./components/App";
+import './styles/index.scss';
 
 const defaultStore = createStore(defaultReducer)
 
