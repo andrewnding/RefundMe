@@ -7,6 +7,7 @@ import defaultReducer from './reducers/index'
 
 import App from "./components/App";
 import LoginPage from "./components/LoginPage";
+import NavigationBar from './components/NavigationBar'
 import './styles/index.scss';
 
 const defaultStore = createStore(defaultReducer)
@@ -14,6 +15,7 @@ const defaultStore = createStore(defaultReducer)
 ReactDOM.render(
     <Provider store={defaultStore}>
         <Router>
+            <NavigationBar />
             <Switch>
                 <Route exact path="/" component={App} />
                 <Route exact path="/login" component={LoginPage} />

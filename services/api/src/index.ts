@@ -15,6 +15,7 @@ app.use('/', DefaultRouter);
 
 app.get('/', (req: Request, res: Response) => {
     console.log('sessionId', req.sessionID)
+    console.log('user', req.user)
     res.send({
         message: 'Hello, world!',
     });
