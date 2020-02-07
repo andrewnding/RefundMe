@@ -7,6 +7,7 @@ import defaultReducer from './reducers/index'
 
 import App from "./components/App";
 import LoginPage from "./components/LoginPage";
+import Dashboard from './components/Dashboard'
 import NavigationBar from './components/NavigationBar'
 import './styles/index.scss';
 
@@ -19,6 +20,7 @@ ReactDOM.render(
             <Switch>
                 <Route exact path="/" component={App} />
                 <Route exact path="/login" component={LoginPage} />
+                <Route exact path="/dashboard" component={Dashboard} />
             </Switch>
         </Router>
     </Provider>,

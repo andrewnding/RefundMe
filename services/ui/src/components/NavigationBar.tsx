@@ -22,6 +22,14 @@ const NavigationBar = () => (
             Login
           </Link>
         </li>
+        <li className="nav-item">
+          <Link
+            to="/dashboard"
+            className="nav-link"
+          >
+            Dashboard
+          </Link>
+        </li>
       </ul>
     </div>
   </nav>
