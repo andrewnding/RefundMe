@@ -1,9 +1,9 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import * as uuidv4 from 'uuid/v4';
-import { PersonType } from '../types/types';
 import * as moment from 'moment';
 import * as passport from 'passport'
+import { PersonType } from 'types';
 
 const router: express.Router = express.Router();
 

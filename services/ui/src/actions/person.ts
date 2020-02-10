@@ -1,4 +1,4 @@
-import { PersonType, PersonActionTypes, LOGIN, LOGOUT } from '../types/index'
+import { PersonType, PersonActionTypes, LOGIN, LOGOUT } from 'types'
 
 export const personLogin = (person: PersonType): PersonActionTypes => {
   return {

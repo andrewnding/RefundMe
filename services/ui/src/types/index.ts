@@ -1,5 +1,5 @@
 import { Action } from 'redux'
-import rootReducer from '../reducers/index'
+import rootReducer from 'reducers/index'
 import { ThunkAction } from 'redux-thunk'
 
 export const LOGIN = 'LOGIN'

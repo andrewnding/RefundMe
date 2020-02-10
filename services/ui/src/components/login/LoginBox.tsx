@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios, { AxiosResponse } from 'axios'
-import { ILoginBox } from './LoginBoxContainer'
+import { ILoginBox } from 'components/login/LoginBoxContainer'
 
 const LoginBox = ({ loggedIn, personLogin }: ILoginBox) => {
     const [emailField, setEmailField] = React.useState('');

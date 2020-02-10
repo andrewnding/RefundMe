@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import LoginBox from './LoginBox'
-import { personLogin } from '../../actions/person'
-import { RootState, PersonType } from '../../types/index'
+import LoginBox from 'components/login/LoginBox'
+import { personLogin } from 'actions/person'
+import { RootState, PersonType } from 'types'
 
 interface StateProps {
   loggedIn: boolean,

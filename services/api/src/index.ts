@@ -1,8 +1,8 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
-import configureApp from './config/config';
-import PlaidRouter from './routes/plaid-router';
-import DefaultRouter from './routes/default-router';
+import configureApp from 'config';
+import PlaidRouter from 'routes/plaid-router';
+import DefaultRouter from 'routes/default-router';
 
 const {
     PORT = 8000,

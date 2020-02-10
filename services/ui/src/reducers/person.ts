@@ -1,4 +1,4 @@
-import { PersonType, LOGIN, LOGOUT, PersonActionTypes } from '../types/index'
+import { PersonType, LOGIN, LOGOUT, PersonActionTypes } from 'types'
 
 const initialState: PersonType = {
   email: '',

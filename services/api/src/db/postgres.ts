@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { PersonType, PersonTypeDb, ItemType, DataStoreType } from '../types/types';
+import { PersonType, PersonTypeDb, ItemType, DataStoreType } from 'types';
 
 const {
     PG_CONNECTION_STRING,

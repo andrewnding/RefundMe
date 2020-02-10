@@ -6,11 +6,11 @@ import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import rootReducer from './reducers/index'
 
-import App from "./components/App";
-import LoginPage from "./components/login/LoginPage";
-import Dashboard from './components/Dashboard'
-import NavigationBar from './components/NavigationBar'
-import './styles/index.scss';
+import App from "components/App";
+import LoginPage from "components/login/LoginPage";
+import Dashboard from 'components/Dashboard'
+import NavigationBar from 'components/NavigationBar'
+import 'styles/index.scss';
 
 const defaultStore = createStore(rootReducer, applyMiddleware(thunk))
 

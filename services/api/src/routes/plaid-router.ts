@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import * as plaid from 'plaid';
-import { PersonType, ItemType } from '../types/types';
+import { ItemType } from 'types';
 
 const {
     PLAID_CLIENT_ID,

@@ -5,8 +5,8 @@ import * as connectPgSimple from 'connect-pg-simple';
 import * as passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import * as uuidv4 from 'uuid/v4';
-import PostgresStore from '../db/postgres';
-import { PersonType } from '../types/types'
+import PostgresStore from 'db/postgres';
+import { PersonType } from 'types'
 
 const pgStore = new PostgresStore();
 
