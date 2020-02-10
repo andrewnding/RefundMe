@@ -9,14 +9,13 @@ export interface PersonType {
     createdAt: moment.Moment,
 }
 
-export interface PersonParams {
-    id?: string
-    email: string
-    password: string
-    firstName: string
-    lastName: string
-    createdAt?: moment.Moment
-    dataStore: DataStoreType
+export interface PersonTypeDb {
+  id: string,
+  email: string,
+  password: string,
+  first_name: string,
+  last_name: string,
+  created_at: moment.Moment,
 }
 
 export interface ItemType {

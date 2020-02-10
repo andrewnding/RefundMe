@@ -8,7 +8,7 @@ import * as passport from 'passport'
 const router: express.Router = express.Router();
 
 router.post('/login', passport.authenticate('local'), (req: Request, res: Response) => {
-    res.json('nice login bro')
+  res.json(req.user)
 })
 
 router.get('/person/:person_id', async (req: Request, res: Response) => {

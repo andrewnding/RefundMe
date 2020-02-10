@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { PersonType, ItemType, DataStoreType } from '../types/types';
+import { PersonType, PersonTypeDb, ItemType, DataStoreType } from '../types/types';
 
 const {
     PG_CONNECTION_STRING,
@@ -20,8 +20,18 @@ class PostgresStore implements DataStoreType {
             if (res.rows.length == 0) {
                 return null
             }
+
+            const result: PersonTypeDb = res.rows[0]
+            const person: PersonType = {
+              id: result.id,
+              email: result.email,
+              password: result.password,
+              firstName: result.first_name,
+              lastName: result.last_name,
+              createdAt: result.created_at,
+            }
             
-            return res.rows[0]
+            return person
         } catch (e) {
             console.log(e)
             throw e
@@ -34,8 +44,18 @@ class PostgresStore implements DataStoreType {
             if (res.rows.length == 0) {
                 return null
             }
+
+            const result: PersonTypeDb = res.rows[0]
+            const person: PersonType = {
+              id: result.id,
+              email: result.email,
+              password: result.password,
+              firstName: result.first_name,
+              lastName: result.last_name,
+              createdAt: result.created_at,
+            }
             
-            return res.rows[0]
+            return person
         } catch (e) {
             console.log(e)
             throw e
