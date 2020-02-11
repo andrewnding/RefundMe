@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Login from 'components/plaid/Login';
 
 const Dashboard = () => {
   React.useEffect(() => {
@@ -8,6 +9,7 @@ const Dashboard = () => {
   return (
     <div>
         Dashboard Page
+        <Login />
     </div>
   )
 }
