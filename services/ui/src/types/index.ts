@@ -19,7 +19,6 @@ interface LoginAction {
 
 interface LogoutAction {
   type: typeof LOGOUT,
-  payload: PersonType,
 }
 
 export type PersonActionTypes = LoginAction | LogoutAction

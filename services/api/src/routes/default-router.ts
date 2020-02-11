@@ -11,6 +11,11 @@ router.post('/login', passport.authenticate('local'), (req: Request, res: Respon
   res.json(req.user)
 })
 
+router.post('/logout', (req: Request, res: Response) => {
+  req.logout()
+  res.json(true)
+})
+
 router.get('/person/:person_id', async (req: Request, res: Response) => {
     let person: PersonType;
     const { person_id } = req.params;

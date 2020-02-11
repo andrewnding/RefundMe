@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import NavigationBar from 'components/navigation-bar/NavigationBar'
+import { personLogout } from 'actions/person'
 import { RootState } from 'types'
 
 interface StateProps {
@@ -9,7 +10,9 @@ interface StateProps {
   loggedIn: boolean,
 }
 
-interface DispatchProps {}
+interface DispatchProps {
+  personLogout: () => any,
+}
 
 interface OwnProps {}
 
@@ -25,7 +28,9 @@ const mapStateToProps: (state: RootState) => StateProps = (state: RootState) => 
 }
 
 const mapDispatchToProps: (dispatch: any) => DispatchProps = (dispatch: any) => {
-  return {}
+  return {
+    personLogout: () => dispatch(personLogout()),
+  }
 }
 
 const NavigationBarContainer = connect<StateProps, DispatchProps, OwnProps>(

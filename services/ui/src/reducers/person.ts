@@ -17,7 +17,7 @@ const personReducer = (state: PersonType = initialState, action: PersonActionTyp
     case LOGOUT:
       return {
         ...state,
-        ...action.payload,
+        ...initialState,
       }
     default:
       return state;

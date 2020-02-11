@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { INavigationBar } from 'components/navigation-bar/NavigationBarContainer'
 
-const NavigationBar = ({email, firstName, lastName, loggedIn}: INavigationBar) => (
+const NavigationBar = ({email, firstName, lastName, loggedIn, personLogout}: INavigationBar) => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light">
     <Link
       to="/"
@@ -31,8 +31,10 @@ const NavigationBar = ({email, firstName, lastName, loggedIn}: INavigationBar) =
               Login
             </Link>
           }
-          
         </li>
+        <li className="nav-item">
+          <button className="btn" onClick={personLogout}>Logout</button>
+        </li> 
         <li className="nav-item">
           <Link
             to="/dashboard"
