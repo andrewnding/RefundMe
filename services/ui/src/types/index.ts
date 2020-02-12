@@ -12,9 +12,14 @@ export interface PersonType {
   loggedIn: boolean,
 }
 
+export interface ILoginAction {
+  email: string,
+  password: string,
+}
+
 interface LoginAction {
   type: typeof LOGIN,
-  payload: PersonType,
+  payload: ILoginAction,
 }
 
 interface LogoutAction {

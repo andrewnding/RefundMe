@@ -1,5 +1,4 @@
 import * as React from 'react';
-import axios, { AxiosResponse } from 'axios'
 import { ILoginBox } from 'components/login/LoginBoxContainer'
 
 const LoginBox = ({ loggedIn, personLogin }: ILoginBox) => {
@@ -17,22 +16,7 @@ const LoginBox = ({ loggedIn, personLogin }: ILoginBox) => {
     const onSubmitLogin = async (e: React.MouseEvent) => {
         e.preventDefault()
         console.log('submit login')
-        try {
-          const res: AxiosResponse = await axios.post('/api/login', {
-            email: emailField,
-            password: passwordField,
-          });
-
-          personLogin({
-            email: res.data.email,
-            firstName: res.data.firstName,
-            lastName: res.data.lastName,
-            loggedIn: true,
-          })
-
-        } catch (e) {
-          console.log('error logging in ', e)
-        }
+        personLogin({ email: emailField, password: passwordField })
     }
 
     return (
