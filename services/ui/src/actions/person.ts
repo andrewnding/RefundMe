@@ -45,6 +45,11 @@ export const getLoggedInPerson = (): AppThunk<void> => {
     try {
       const res: AxiosResponse = await axios.get('/api/get_logged_in_person');
 
+      // No user logged in
+      if (!res.data) {
+        return
+      }
+
       const payload = {
         email: res.data.email,
         firstName: res.data.firstName,

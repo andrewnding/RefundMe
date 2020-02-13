@@ -17,6 +17,11 @@ router.post('/logout', (req: Request, res: Response) => {
 })
 
 router.get('/get_logged_in_person', async (req: Request, res: Response) => {
+  if (!req.user) {
+    res.json(null)
+    return
+  }
+
   res.json({
     email: req.user.email,
     firstName: req.user.firstName,
