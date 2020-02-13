@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import rootReducer from 'reducers/index'
 
+import RootContainer from "components/root/RootContainer";
 import NavigationBarContainer from 'components/navigation-bar/NavigationBarContainer'
 import App from "components/App";
 import LoginPage from "components/login/LoginPage";
@@ -17,15 +18,16 @@ const defaultStore = createStore(rootReducer, applyMiddleware(thunk))
 
 ReactDOM.render(
     <Provider store={defaultStore}>
-        <Router>
-            <NavigationBarContainer />
-            <Switch>
-                <Route exact path="/" component={App} />
-                <Route exact path="/login" component={LoginPage} />
-                <Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/account" component={AccountPage} />
-            </Switch>
-        </Router>
+      <RootContainer />
+      <Router>
+        <NavigationBarContainer />
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/account" component={AccountPage} />
+        </Switch>
+      </Router>
     </Provider>,
     document.getElementById("root")
 );

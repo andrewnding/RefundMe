@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
 import LoginBox from 'components/login/LoginBox'
 import { personLogin } from 'actions/person'
-import { RootState, ILoginAction } from 'types'
+import { RootState, ILoginActionParams } from 'types'
 
 interface StateProps {
   loggedIn: boolean,
 }
 
 interface DispatchProps {
-  personLogin: (args: ILoginAction) => any,
+  personLogin: (args: ILoginActionParams) => any,
 }
 
 interface OwnProps {}
@@ -23,7 +23,7 @@ const mapStateToProps: (state: RootState) => StateProps = (state: RootState) => 
 
 const mapDispatchToProps: (dispatch: any) => DispatchProps = (dispatch: any) => {
   return {
-    personLogin: (args: ILoginAction) => dispatch(personLogin(args)),
+    personLogin: (args: ILoginActionParams) => dispatch(personLogin(args)),
   }
 }
 

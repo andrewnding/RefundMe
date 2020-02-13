@@ -16,6 +16,14 @@ router.post('/logout', (req: Request, res: Response) => {
   res.json(true)
 })
 
+router.get('/get_logged_in_person', async (req: Request, res: Response) => {
+  res.json({
+    email: req.user.email,
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+  })
+})
+
 router.get('/person/:person_id', async (req: Request, res: Response) => {
     let person: PersonType;
     const { person_id } = req.params;

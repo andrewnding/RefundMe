@@ -1,5 +1,11 @@
-declare namespace Express {
+import { PersonType } from 'types'
+
+declare global {
+  namespace Express {
     export interface Request {
-       context?: any
+      context?: any
     }
- }
+  
+    export interface User extends PersonType {}
+  }
+}
