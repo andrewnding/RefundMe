@@ -10,6 +10,7 @@ import RootContainer from "components/root/RootContainer";
 import NavigationBarContainer from 'components/navigation-bar/NavigationBarContainer'
 import App from "components/App";
 import LoginPage from "components/login/LoginPage";
+import SignUpPage from "components/sign-up/SignUpPage";
 import Dashboard from 'components/dashboard/Dashboard'
 import AccountPage from 'components/account/AccountPage';
 import 'styles/index.scss';
@@ -24,6 +25,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path="/" component={App} />
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/signup" component={SignUpPage} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/account" component={AccountPage} />
         </Switch>

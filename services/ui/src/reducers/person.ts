@@ -1,4 +1,4 @@
-import { PersonType, LOGIN, LOGOUT, GET_LOGGED_IN_PERSON, PersonActionTypes } from 'types'
+import { PersonType, LOGIN, LOGOUT, PERSON_CREATE, GET_LOGGED_IN_PERSON, PersonActionTypes } from 'types'
 
 const initialState: PersonType = {
   email: '',
@@ -22,6 +22,14 @@ const personReducer = (state: PersonType = initialState, action: PersonActionTyp
         ...state,
         ...initialState,
       }
+    case PERSON_CREATE:
+      return {
+        ...state,
+        email: action.payload.email,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        loggedIn: action.payload.loggedIn,
+      }   
     case GET_LOGGED_IN_PERSON:
       return {
         ...state,

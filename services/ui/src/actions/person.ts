@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-import { ILoginActionParams, LOGIN, LOGOUT, GET_LOGGED_IN_PERSON, AppThunk } from 'types'
+import { ILoginActionParams, IPersonCreateParams, LOGIN, LOGOUT, PERSON_CREATE, GET_LOGGED_IN_PERSON, AppThunk } from 'types'
 
 export const personLogin = (credentials: ILoginActionParams): AppThunk<void> => {
   return async (dispatch) => {
@@ -36,6 +36,38 @@ export const personLogout = (): AppThunk<void> => {
       })
     } catch (e) {
       console.log('error logging out ', e)
+    }
+  }
+}
+
+export const personCreate = (info: IPersonCreateParams): AppThunk<void> => {
+  return async (dispatch) => {
+    try {
+      const res: AxiosResponse = await axios.post('/api/person/create', {
+        email: info.email,
+        password: info.password,
+        first_name: info.firstName,
+        last_name: info.lastName,
+      });
+
+      if (res.status !== 200) {
+        console.log('error creating person')
+        return;
+      }
+
+      const payload = {
+        email: info.email,
+        firstName: info.firstName,
+        lastName: info.lastName,
+        loggedIn: true,
+      }
+
+      dispatch({
+        type: PERSON_CREATE,
+        payload: payload,
+      })
+    } catch (e) {
+      console.log('error logging in ', e)
     }
   }
 }
