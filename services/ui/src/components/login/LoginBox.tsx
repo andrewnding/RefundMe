@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { ILoginBox } from 'components/login/LoginBoxContainer'
+import { useHistory } from 'react-router-dom'
 
 const LoginBox = ({ loggedIn, personLogin }: ILoginBox) => {
     const [emailField, setEmailField] = React.useState('');
     const [passwordField, setPasswordField] = React.useState('');
+    const history = useHistory()
 
     const handleChangeEmailField = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmailField(e.target.value)
@@ -14,9 +16,14 @@ const LoginBox = ({ loggedIn, personLogin }: ILoginBox) => {
     }
 
     const onSubmitLogin = async (e: React.MouseEvent) => {
-        e.preventDefault()
-        console.log('submit login')
-        personLogin({ email: emailField, password: passwordField })
+      e.preventDefault()
+      console.log('submit login')
+      try {
+        await personLogin({ email: emailField, password: passwordField })
+        history.push('/dashboard')
+      } catch (e) {
+        console.log('Login Failed')
+      }
     }
 
     return (

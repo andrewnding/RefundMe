@@ -22,6 +22,7 @@ export const personLogin = (credentials: ILoginActionParams): AppThunk<void> => 
       })
     } catch (e) {
       console.log('error logging in ', e)
+      throw e
     }
   }
 }
@@ -36,6 +37,7 @@ export const personLogout = (): AppThunk<void> => {
       })
     } catch (e) {
       console.log('error logging out ', e)
+      throw e
     }
   }
 }
@@ -68,6 +70,7 @@ export const personCreate = (info: IPersonCreateParams): AppThunk<void> => {
       })
     } catch (e) {
       console.log('error logging in ', e)
+      throw e
     }
   }
 }
@@ -95,6 +98,7 @@ export const getLoggedInPerson = (): AppThunk<void> => {
       })
     } catch (e) {
       console.log('error getting logged in person ', e)
+      throw e
     }
   }
 }
