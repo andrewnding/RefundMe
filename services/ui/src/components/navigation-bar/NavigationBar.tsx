@@ -15,34 +15,41 @@ const NavigationBar = ({email, firstName, lastName, loggedIn, personLogout}: INa
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav mr-auto">
-        <li className="nav-item active">
-          {
-            loggedIn ?
+        <li className="nav-item">
+          <Link
+            to="/login"
+            className="nav-link"
+          >
+            Login
+          </Link>
+        </li>
+        {
+          loggedIn && <li className="nav-item">
+            <button className="btn" onClick={personLogout}>Logout</button>
+          </li> 
+        }
+        {
+          loggedIn &&
+          <li className="nav-item">
+            <Link
+              to="/dashboard"
+              className="nav-link"
+            >
+              Dashboard
+            </Link>
+          </li>
+        }
+        {
+          loggedIn &&
+          <li className="nav-item">
             <Link
               to="/account"
               className="nav-link"
             >
               {firstName}
-            </Link> :
-            <Link
-              to="/login"
-              className="nav-link"
-            >
-              Login
             </Link>
-          }
-        </li>
-        <li className="nav-item">
-          <button className="btn" onClick={personLogout}>Logout</button>
-        </li> 
-        <li className="nav-item">
-          <Link
-            to="/dashboard"
-            className="nav-link"
-          >
-            Dashboard
-          </Link>
-        </li>
+          </li>
+        }
       </ul>
     </div>
   </nav>
