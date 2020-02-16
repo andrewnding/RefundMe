@@ -97,7 +97,7 @@ class PostgresStore implements DataStoreType {
         }
     }
     
-    createItem: (person_id: string, item_id: string, access_token: string) => Promise<void>
+    createAndAddItemToPerson: (person_id: string, item_id: string, access_token: string) => Promise<void>
         = async (person_id: string, item_id: string, access_token: string) => {
             // You must use transactions with a client, not with a pool
             const client = await this.pool.connect()

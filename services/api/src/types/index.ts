@@ -29,5 +29,5 @@ export interface DataStoreType {
     getPersonByEmail: (email: string) => Promise<PersonType>
     createPerson: (person: PersonType) => Promise<PersonType>
     getItemsFromPerson: (person_id: string) => Promise<ItemType[]>
-    createItem: (person_id: string, item_id: string, access_token: string) => Promise<void>
+    createAndAddItemToPerson: (person_id: string, item_id: string, access_token: string) => Promise<void>
 }

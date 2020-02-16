@@ -21,7 +21,6 @@ const client = new plaid.Client(
 const router: express.Router = express.Router();
 
 let ACCESS_TOKEN: string;
-let ITEM_ID: string;
 
 const getAccessToken: () => string = () => {
     if (ACCESS_TOKEN) {
@@ -33,26 +32,39 @@ const getAccessToken: () => string = () => {
     }
 }
 
-router.post('/get_access_token', (req: Request, res: Response) => {
-    const PUBLIC_TOKEN = req.body.public_token;
-    client.exchangePublicToken(PUBLIC_TOKEN, (error: Error, tokenResponse: plaid.TokenResponse) => {
-        if (error) {
-            const msg = 'Could not exchange public token!';
-            console.log(`${msg} \n ${JSON.stringify(error)}`);
-            return res.json({
-                error: msg,
-            });
-        }
+router.post('/get_access_token', async (req: Request, res: Response) => {
+    const {
+      public_token,
+      person_id,
+    } = req.body
+    let tokenResponse: plaid.TokenResponse;
 
-        ACCESS_TOKEN = tokenResponse.access_token;
-        ITEM_ID = tokenResponse.item_id;
-        console.log(tokenResponse);
+    try {
+      tokenResponse = await client.exchangePublicToken(public_token)
+    } catch (e) {
+      const msg = 'Could not exchange public token!';
+      console.log(`${msg} \n ${JSON.stringify(e)}`);
+      return res.json({
+          error: msg,
+      });
+    }
 
-        res.json({
-            access_token: ACCESS_TOKEN,
-            item_id: ITEM_ID,
-            error: false,
+    const {
+        item_id,
+        access_token,
+    } = tokenResponse;
+
+    try {
+        req.context.dataStore.createAndAddItemToPerson(person_id, item_id, access_token);
+    } catch (e) {
+        console.log(`Error creating item link`);
+        return res.json({
+            error: e,
         });
+    }
+
+    res.json({
+        error: false,
     });
 });
 
@@ -100,7 +112,7 @@ router.post('/create_item', async (req: Request, res: Response) => {
     } = tokenResponse;
 
     try {
-        // await createItem(person_id, item_id, access_token);
+        // await req.context.dataStore.createAndAddItemToPerson(person_id, item_id, access_token);
     } catch (e) {
         console.log(`Error creating item link`);
         return res.json({

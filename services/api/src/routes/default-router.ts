@@ -23,6 +23,7 @@ router.get('/get_logged_in_person', async (req: Request, res: Response) => {
   }
 
   res.json({
+    id: req.user.id,
     email: req.user.email,
     firstName: req.user.firstName,
     lastName: req.user.lastName,
