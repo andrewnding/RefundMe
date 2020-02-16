@@ -8,6 +8,7 @@ export const PERSON_CREATE = 'PERSON_CREATE'
 export const GET_LOGGED_IN_PERSON = 'GET_LOGGED_IN_PERSON'
 
 export interface PersonType {
+  id: string,
   email: string,
   firstName: string,
   lastName: string,

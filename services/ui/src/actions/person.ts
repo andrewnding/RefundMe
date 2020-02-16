@@ -10,6 +10,7 @@ export const personLogin = (credentials: ILoginActionParams): AppThunk<void> => 
       });
 
       const payload = {
+        id: res.data.id,
         email: res.data.email,
         firstName: res.data.firstName,
         lastName: res.data.lastName,
@@ -58,6 +59,7 @@ export const personCreate = (info: IPersonCreateParams): AppThunk<void> => {
       }
 
       const payload = {
+        id: res.data.id,
         email: info.email,
         firstName: info.firstName,
         lastName: info.lastName,
@@ -86,6 +88,7 @@ export const getLoggedInPerson = (): AppThunk<void> => {
       }
 
       const payload = {
+        id: res.data.id,
         email: res.data.email,
         firstName: res.data.firstName,
         lastName: res.data.lastName,

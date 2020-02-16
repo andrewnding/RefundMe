@@ -1,15 +1,11 @@
 import * as React from 'react';
-import Login from 'components/plaid/Login';
+import LoginBoxContainer from 'components/plaid/LoginBoxContainer';
 
 const Dashboard = () => {
-  React.useEffect(() => {
-    console.log(document.cookie)
-  })
-
   return (
     <div>
         Dashboard Page
-        <Login />
+        <LoginBoxContainer />
     </div>
   )
 }
