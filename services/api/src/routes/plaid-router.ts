@@ -90,11 +90,18 @@ router.get('/get_transactions', async (req: Request, res: Response) => {
     res.json(getAllTransactionsResponse);
 })
 
-router.get('/person/items/:person_id', async (req: Request, res: Response) => {
+router.get('/person/items', async (req: Request, res: Response) => {
     let items: ItemType[];
+
+    if (!req.user || !req.user.id) {
+      console.log('no user in /person/items')
+      return
+    }
+
     try {
+      items = await req.context.dataStore.getItemsFromPerson(req.user.id)
     } catch (e) {
-        console.log('Error getting person', e);
+        console.log('Error getting person items', e);
     }
     res.json(items);
 })
