@@ -68,10 +68,20 @@ router.post('/get_access_token', async (req: Request, res: Response) => {
     });
 });
 
+router.get('/get_auth', async (req: Request, res: Response) => {
+  let getAuthResponse: plaid.AuthResponse
+  try {
+    getAuthResponse = await client.getAuth(getAccessToken())
+    return res.json(getAuthResponse)
+  } catch (e) {
+    console.log('error getting auth', e)
+  }
+})
+
 router.get('/get_transactions', async (req: Request, res: Response) => {
     let getAllTransactionsResponse: plaid.TransactionsAllResponse;
     try {
-        getAllTransactionsResponse = await client.getAllTransactions(getAccessToken() || 'access-sandbox-56412edb-cfa3-4963-a2cf-cc6cda1cdda1', '2018-01-01', '2018-02-01')
+        getAllTransactionsResponse = await client.getAllTransactions(getAccessToken(), '2018-01-01', '2018-02-01')
     } catch (e) {
         console.log('Error getting all transactions', e);
     }
@@ -87,44 +97,6 @@ router.get('/person/items/:person_id', async (req: Request, res: Response) => {
         console.log('Error getting person', e);
     }
     res.json(items);
-})
-
-router.post('/create_item', async (req: Request, res: Response) => {
-    const {
-        public_token,
-        person_id,
-    } = req.body;
-
-    let tokenResponse: plaid.TokenResponse;
-    try {
-        tokenResponse = await client.exchangePublicToken(public_token)
-    } catch (e) {
-        const msg = 'Could not exchange public token!';
-        console.log(`${msg} \n ${JSON.stringify(e)}`);
-        return res.json({
-            error: msg,
-        });
-    }
-
-    const {
-        item_id,
-        access_token,
-    } = tokenResponse;
-
-    try {
-        // await req.context.dataStore.createAndAddItemToPerson(person_id, item_id, access_token);
-    } catch (e) {
-        console.log(`Error creating item link`);
-        return res.json({
-            error: e,
-        });
-    }
-
-    res.json({
-        item_id: item_id,
-        access_token: access_token,
-        error: false,
-    });
 })
 
 export default router;
