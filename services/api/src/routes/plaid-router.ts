@@ -98,12 +98,23 @@ router.get('/person/items', async (req: Request, res: Response) => {
       return
     }
 
+    // First get items associated with person
     try {
       items = await req.context.dataStore.getItemsFromPerson(req.user.id)
     } catch (e) {
         console.log('Error getting person items', e);
     }
-    res.json(items);
+    const accessTokens = items.map(item => item.access_token)
+
+    // Then call /item/get plaid endpoint on each item to get detailed information
+    const itemPromises = accessTokens.map(token => client.getItem(token))
+    const plaidItems = await Promise.all(itemPromises)
+    const result = plaidItems.map(item => ({
+      item_id: item.item.item_id,
+      institution_id: item.item.institution_id,
+    }))
+    
+    res.json(result);
 })
 
 export default router;

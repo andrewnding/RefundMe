@@ -6,6 +6,7 @@ export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
 export const PERSON_CREATE = 'PERSON_CREATE'
 export const GET_LOGGED_IN_PERSON = 'GET_LOGGED_IN_PERSON'
+export const GET_PERSON_ITEMS_ACTION = 'GET_PERSON_ITEMS_ACTION'
 
 export interface PersonType {
   id: string,
@@ -47,6 +48,26 @@ interface GetLoggedInPersonAction {
 }
 
 export type PersonActionTypes = LoginAction | LogoutAction | PersonCreateAction | GetLoggedInPersonAction
+
+export interface ItemType {
+  byId: ItemByIdType
+}
+
+export interface ItemByIdType {
+  [key: string]: ItemByIdDataType,
+}
+
+export interface ItemByIdDataType {
+  item_id: string,
+  institution_id: string,
+}
+
+interface GetPersonItemsAction {
+  type: typeof GET_PERSON_ITEMS_ACTION,
+  payload: ItemByIdDataType[],
+}
+
+export type ItemActionTypes = GetPersonItemsAction
 
 export type RootState = ReturnType<typeof rootReducer>
 
